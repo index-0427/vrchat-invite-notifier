@@ -1,0 +1,14 @@
+{
+  "vrchat": {
+    "username": "your_vrchat_username",
+    "password": "your_vrchat_password"
+  },
+  "discord": {
+    "webhook_url": "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"
+  },
+  "options": {
+    "notify_types": ["invite", "requestInvite"],
+    "auto_reconnect": true,
+    "log_level": "info"
+  }
+}
