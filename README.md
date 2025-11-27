@@ -104,62 +104,6 @@ vrchat-invite-notifier/
 - [ ] ログファイル出力
 - [ ] GUI版の作成
 
-## インターフェース定義
-
-### VRChat WebSocket API
-
-**接続先**: `wss://pipeline.vrchat.cloud/?authToken={token}`
-
-**受信イベント例（インバイト）**:
-```json
-{
-  "type": "notification",
-  "content": "{\"id\":\"not_xxx...\",\"type\":\"invite\",\"senderUserId\":\"usr_xxx...\",\"senderUsername\":\"ExampleUser\",\"receiverUserId\":\"usr_yyy...\",\"message\":\"\",\"details\":{\"worldId\":\"wrld_xxx...\",\"worldName\":\"World Name\",\"inviteMessage\":\"一緒に遊びませんか？\"},\"created_at\":\"2025-11-27T12:00:00.000Z\"}"
-}
-```
-
-**受信イベント例（リクエストインバイト）**:
-```json
-{
-  "type": "notification",
-  "content": "{\"id\":\"not_xxx...\",\"type\":\"requestInvite\",\"senderUserId\":\"usr_xxx...\",\"senderUsername\":\"ExampleUser\",\"receiverUserId\":\"usr_yyy...\",\"message\":\"\",\"details\":{\"requestMessage\":\"今どこにいますか？\"},\"created_at\":\"2025-11-27T12:00:00.000Z\"}"
-}
-```
-
-**注意**: `content`フィールドはJSON文字列としてエンコードされています。
-
-**通知タイプ**:
-- `invite`: 通常のインバイト（メッセージは `details.inviteMessage` に格納）
-- `requestInvite`: インバイトリクエスト（メッセージは `details.requestMessage` に格納）
-
-### Discord Webhook
-
-**送信形式** (Discord Webhook Payload):
-```json
-{
-  "embeds": [
-    {
-      "title": "📬 VRChat Invite",
-      "description": "**ExampleUser** からインバイトが届きました",
-      "fields": [
-        {
-          "name": "ワールド",
-          "value": "World Name",
-          "inline": false
-        },
-        {
-          "name": "メッセージ",
-          "value": "インバイトメッセージ",
-          "inline": false
-        }
-      ],
-      "color": 5814783,
-      "timestamp": "2025-11-27T12:00:00.000Z"
-    }
-  ]
-}
-```
-
 ## 設定ファイル仕様
 
 ### config.json (例)
@@ -186,12 +130,6 @@ VRCHAT_USERNAME=your_username
 VRCHAT_PASSWORD=your_password
 DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 ```
-
-## セキュリティ考慮事項
-
-- ❗ VRChat認証情報は`.env`または設定ファイルで管理（Gitにコミットしない）
-- `.gitignore`に`config.json`, `.env`を追加
-- 認証トークンのメモリ上での管理
 
 ## セットアップ手順
 
@@ -347,28 +285,6 @@ python test_notification.py
 - [ ] 通知フィルタリング機能
 - [ ] GUI版の作成
 
-## 注意事項
-
-### セキュリティ
-- VRChat認証情報は安全に管理してください
-- `.env`や`config.json`は絶対にGitにコミットしないでください
-- Discord Webhook URLも機密情報として扱ってください
-
-### VRChat利用規約
-- このツールは非公式のVRChat APIを使用しています
-- VRChatの利用規約に違反しないよう、自己責任で使用してください
-- 過度なAPI呼び出しは避けてください
-
-### その他
-- WebSocket接続は常時接続のため、インターネット接続が必要です
-- VRChatのAPI仕様変更により動作しなくなる可能性があります
-
-## 貢献
-
-バグ報告や機能要望は [Issues](https://github.com/index-0427/vrchat-invite-notifier/issues) にお願いします。
-
-プルリクエストも歓迎します！
-
 ## 参考資料
 
 - [VRChat API Documentation](https://vrchat.community/)
@@ -378,7 +294,3 @@ python test_notification.py
 ## ライセンス
 
 MIT License
-
-## 作者
-
-[@index-0427](https://github.com/index-0427)
