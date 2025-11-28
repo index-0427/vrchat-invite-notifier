@@ -60,7 +60,8 @@ Discordチャンネル
 vrchat-invite-notifier/
 ├── src/
 │   ├── __init__.py
-│   ├── main.py              # エントリーポイント
+│   ├── main.py              # CUI版エントリーポイント
+│   ├── gui.py               # GUI版メイン画面
 │   ├── vrchat/
 │   │   ├── __init__.py
 │   │   ├── auth.py          # VRChat認証
@@ -73,13 +74,16 @@ vrchat-invite-notifier/
 │   │   └── loader.py        # 設定ファイル読み込み
 │   └── utils/
 │       └── __init__.py
-├── config.example.json      # 設定サンプル
+├── config.example.json      # CUI版設定サンプル
 ├── .env.example             # 環境変数サンプル
 ├── requirements.txt         # Python依存関係
-├── run.py                   # 開発用実行スクリプト
-├── run.bat                  # Windows実行バッチ
-├── run.sh                   # Linux/Mac実行シェル
-├── build.py                 # .exe化ビルドスクリプト
+├── run.py                   # CUI版実行スクリプト
+├── run_gui.py               # GUI版実行スクリプト
+├── run.bat                  # Windows CUI実行バッチ
+├── run.sh                   # Linux/Mac CUI実行シェル
+├── build.py                 # CUI版.exe化ビルド
+├── build_gui.py             # GUI版.exe化ビルド
+├── test_notification.py     # Discord通知テスト
 ├── .gitignore
 ├── README.md
 └── LICENSE
@@ -96,13 +100,13 @@ vrchat-invite-notifier/
 - ✅ 2段階認証（TOTP）対応
 - ✅ 自動再接続処理（WebSocket切断時）
 - ✅ .exe化対応（PyInstaller）
+- ✅ GUI版（設定ファイル不要）
 
 ### 今後の拡張案
 - [ ] 通知フィルタリング（特定ユーザーのみ等）
 - [ ] 通知テンプレートのカスタマイズ
 - [ ] 複数Discord Webhookへの同時送信
 - [ ] ログファイル出力
-- [ ] GUI版の作成
 
 ## 設定ファイル仕様
 
@@ -214,21 +218,43 @@ python3 run.py
 ./run.sh
 ```
 
-### 方法2: .exeファイルとして実行（Windows）
+### 方法2: GUI版で実行（Windows推奨）⭐
 
-#### 1. ビルド
+**最も簡単な方法です！設定ファイルの編集が不要です。**
+
+#### 開発環境で実行
 ```bash
 # 仮想環境をアクティベート後
-python build.py
+python run_gui.py
 ```
 
-#### 2. 実行
+#### .exeファイルとして実行
 ```bash
-cd dist
-vrchat-invite-notifier.exe
+# ビルド
+python build_gui.py
+
+# 実行
+dist\vrchat-invite-notifier-gui.exe
 ```
 
-**注意**: .exe実行時は、実行ファイルと同じディレクトリに`config.json`または`.env`を配置してください。
+GUIで以下を入力して「開始」ボタンをクリックするだけ：
+- VRChatユーザー名
+- VRChatパスワード
+- Discord Webhook URL
+
+設定は自動保存されるため、次回起動時は入力不要です。
+
+### 方法3: CUI版 .exeファイルとして実行（Windows）
+
+```bash
+# ビルド
+python build.py
+
+# 実行（config.jsonまたは.envが必要）
+dist\vrchat-invite-notifier.exe
+```
+
+**注意**: CUI版の.exe実行時は、実行ファイルと同じディレクトリに`config.json`または`.env`を配置してください。
 
 ## 使い方
 
