@@ -6,7 +6,7 @@ src_dir = project_root / "src"
 
 sys.path.insert(0, str(src_dir))
 
-from main import main
+from gui import main
 
 if __name__ == "__main__":
     main()

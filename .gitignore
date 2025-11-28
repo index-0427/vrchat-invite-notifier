@@ -27,9 +27,8 @@ ENV/
 env/
 
 # 認証情報・設定ファイル
-config.json
 gui_config.json
-.env
+config.json
 *.log
 
 # IDE
